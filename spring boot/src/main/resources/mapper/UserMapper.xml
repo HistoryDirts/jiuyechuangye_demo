@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.UserMapper">
+    <insert id="insert">
+        insert into user_info (user_name,user_password) values (#{name}, #{password})
+    </insert>
+    <insert id="insertToStudent">
+        insert into student_info (user_id,stu_number,stu_name,stu_major_name,stu_specialty,stu_hobby)
+        values (#{id}, #{number}, #{name}, #{majorName}, #{specialty}, #{hobby})
+    </insert>
+    <insert id="insertToIdentity">
+        insert into user_identity (user_id,user_type)
+        values (#{id}, #{userType})
+    </insert>
+    <insert id="insertToTeacher">
+        insert into teacher_info (user_id,teacher_number,teacher_name,teacher_guidance,teacher_specialty,teacher_hobby)
+        values (#{id}, #{number}, #{name}, #{guidance}, #{specialty}, #{hobby})
+    </insert>
+    <insert id="insertToCompany">
+        insert into company_info (user_id,company_id,company_name,company_business,company_linkman,company_profile)
+        values (#{id}, #{number}, #{name}, #{business}, #{linkman}, #{profile})
+    </insert>
+    <insert id="insertToOther">
+        insert into other_info (user_id,other_id,other_name,other_profile,other_specialty,other_hobby)
+        values (#{id}, #{number}, #{name}, #{profile}, #{specialty}, #{hobby})
+    </insert>
+    <select id="findAll" resultType="com.example.demo.entity.User" resultMap="UserResultMap">
+        select * from user_info
+    </select>
+    <select id="login" resultType="com.example.demo.entity.User" resultMap="UserResultMap">
+        select * from user_info where user_name = #{name} and user_password = #{password}
+    </select>
+    <select id="selectById" resultType="com.example.demo.entity.User" resultMap="UserResultMap">
+        select * from user_info where id = #{id}
+    </select>
+    <select id="selectByName" resultType="com.example.demo.entity.User" resultMap="UserResultMap">
+        select * from user_info where user_name = #{name}
+    </select>
+    <resultMap type="com.example.demo.entity.User" id="UserResultMap">
+        <!-- 定义主键 ,非常重要。如果是多个字段,则定义多个id -->
+        <!-- property：主键在pojo中的属性名 -->
+        <!-- column：主键在数据库中的列名 -->
+        <id property="id" column="id" />
+
+        <!-- 定义普通属性 -->
+        <result property="name" column="user_name" />
+        <result property="password" column="user_password" />
+        <result property="level" column="user_level" />
+        <result property="score" column="user_score" />
+        <result property="exp" column="user_exp" />
+        <result property="intro" column="user_intro" />
+        <result property="nationality" column="user_nationality" />
+        <result property="headPath" column="user_headshot" />
+    </resultMap>
+</mapper>
